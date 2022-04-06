@@ -1,33 +1,34 @@
 {
-    "name": "Owen UserBot",
-    "description": "Owen UserBot",
-    "logo": "https://i.hizliresim.com/9tep7oz.jpg",
-    "keywords": [
-      "telegram",
-      "userbot",
-      "Owen",
-      "plugin",
-      "modular",
-      "productivity"
-    ],
-    "repository": "https://github.com/OwenProjects/OwenUserBot",
-    "website":   "https://t.me/OwenProjects",
-    "success_url": "https://t.me/Owenuserbot",
-    "stack": "container",
-    "env": {
-      "BOT_TOKEN": {
-        "description": "BOT TOKEN",
-        "required": false
-      }},
+  "name": "Owen UserBot",
+  "description": "Owen UserBot",
+  "logo": "https://i.hizliresim.com/9tep7oz.jpg",
+  "keywords": [
+    "telegram",
+    "userbot",
+	"Owen",
+    "plugin",
+    "modular",
+    "productivity"
+  ],
+  "repository": "https://github.com/OwenProjects/OwenUserBot",
+  "website":   "https://t.me/OwenProjects",
+  "success_url": "https://t.me/Owenuserbot",
+  "stack": "container",
+  "env": {
+    "BOT_TOKEN": {
+      "description": ".",
+      "required": true
+    }
 
-    "addons": [{
-      "plan": "heroku-postgresql"
-    }],
-    "buildpacks": [{
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-    }, {
-      "url": "heroku/python"
-    },{
-      "url": "heroku-community/apt"
-      }]
-  }
+  },
+  "addons": [{
+    "plan": "heroku-postgresql"
+  }],
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  }, {
+    "url": "heroku/python"
+  },{
+    "url": "heroku-community/apt"
+    }]
+}
