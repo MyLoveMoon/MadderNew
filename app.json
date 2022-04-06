@@ -18,7 +18,7 @@
       "BOT_TOKEN": {
         "description": "BOT TOKEN",
         "required": false
-      },
+      }},
 
     "addons": [{
       "plan": "heroku-postgresql"
@@ -30,4 +30,4 @@
     },{
       "url": "heroku-community/apt"
       }]
-  }}
+  }
