@@ -11,7 +11,7 @@
       "description": "Enter database url! Please do not steal.",
       "value": ""
     },
-    "OWNER"
+    "OWNER": {
       "description": "Enter your id! Please do not steal.",
       "value": ""
     }
