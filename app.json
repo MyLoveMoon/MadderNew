@@ -6,6 +6,7 @@
     "BOT_TOKEN": {
       "description": "Enter bot token Get It From @botfather! Please do not steal.",
       "value": ""
+    }
   },
   "buildpacks": [{
     "url": "https://github.com/heroku/heroku-buildpack-python.git"
