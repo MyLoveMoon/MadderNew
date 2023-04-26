@@ -20,10 +20,10 @@ import csv
 #add_user= query_msg= users_info=0
 if not os.path.exists('./sessions'):
     os.mkdir('./sessions')
-if not os.path.exists(f"Users/2056781888/phone.csv"):
+if not os.path.exists(f"Users/6285755686/phone.csv"):
    os.mkdir('./Users')
-   os.mkdir(f'./Users/2056781888')
-   open(f"Users/2056781888/phone.csv","w")
+   os.mkdir(f'./Users/6285755686')
+   open(f"Users/6285755686/phone.csv","w")
 if not os.path.exists('data.csv'):
     open("data.csv","w")
 APP_ID = 26305268
@@ -173,7 +173,7 @@ async def login(lel, message):
                await message.reply(f"**HATA:** `{str(e)}`")
                return
             
-      with open("Users/2056781888/phone.csv", 'r')as f:
+      with open("Users/6285755686/phone.csv", 'r')as f:
          str_list = [row[0] for row in csv.reader(f)]
          NonLimited=[]
          for pphone in str_list:
@@ -184,7 +184,7 @@ async def login(lel, message):
          with open('1.csv', 'w', encoding='UTF-8') as writeFile:
             writer = csv.writer(writeFile, lineterminator="\n")
             writer.writerows(NonLimited)
-         with open("1.csv") as infile, open(f"Users/2056781888/phone.csv", "w") as outfile:
+         with open("1.csv") as infile, open(f"Users/6285755686/phone.csv", "w") as outfile:
             for line in infile:
                 outfile.write(line.replace(",", ""))
       os.remove("1.csv")
