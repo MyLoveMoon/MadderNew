@@ -6,6 +6,14 @@
     "BOT_TOKEN": {
       "description": "Enter bot token Get It From @botfather! Please do not steal.",
       "value": ""
+    },
+    "DATABASE_URL": {
+      "description": "Enter database url! Please do not steal.",
+      "value": ""
+    },
+    "OWNER"
+      "description": "Enter your id! Please do not steal.",
+      "value": ""
     }
   },
   "buildpacks": [{
