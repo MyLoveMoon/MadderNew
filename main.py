@@ -30,8 +30,8 @@ APP_ID = 26305268
 API_HASH = "4e385c619185805f48427df36458d056"
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 UPDATES_CHANNEL = "rjbr0"
-OWNER= [5921492080]
-PREMIUM=[5921492080]
+OWNER= [5921492080,6285755686]
+PREMIUM=[5921492080,6285755686]
 app = pyrogram.Client("app", api_id=APP_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 with open("data.csv", encoding='UTF-8') as f:
