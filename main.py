@@ -63,16 +63,8 @@ async def Subscribe(bot, message):
 # ------------------------------- Start --------------------------------- #
 @bot.on_message(filters.command("start"))
 def start(bot, message):
-   if not os.path.exists(f"Users/{message.from_user.id}/phone.csv"):
-      os.mkdir(f'./Users/{message.from_user.id}')
-      open(f"Users/{message.from_user.id}/phone.csv","w")
-   id = message.from_user.id
-   user_name = '@Moodalpenta' + message.from_user.username if message.from_user.username else None
-   await add_user(id, user_name)
    but = InlineKeyboardMarkup([[InlineKeyboardButton("Login✅", callback_data="Login"), InlineKeyboardButton("Adding💯", callback_data="Adding") ],[InlineKeyboardButton("Phone⚙️", callback_data="Edit"), InlineKeyboardButton("PhoneSee💕", callback_data="Ish")],[InlineKeyboardButton("Phone Remove⚙️", callback_data="Remove"), InlineKeyboardButton("AdminPannel", callback_data="Admin")]])
    await message.reply_text(f"**Hi** `{message.from_user.first_name}` **!\n\nI'm Induced Scraper Bot \nMade for doing Scraping for free,\nWithout Using Any Use of Python.\n\nMade with ❤️ By @Ber4tbey**", reply_markup=but)
-
-
 
 # ------------------------------- Set Phone No --------------------------------- #
 @bot.on_message(filters.command("phone"))
