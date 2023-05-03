@@ -123,7 +123,7 @@ def phone(bot, message):
 @bot.on_message(filters.command(["login"]))
 def login(bot, message):
  try:
-   await message.delete()
+   message.delete()
  
    if message.from_user.id not in PREMIUM:
       await bot.send_message(message.chat.id, f"**Premium Üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
