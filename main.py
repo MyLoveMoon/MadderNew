@@ -74,7 +74,7 @@ def phone(bot, message):
    message.delete()
 
    if message.from_user.id not in PREMIUM:
-      await bot.send_message(message.chat.id, f"**Premium deilsin ❤️ By @Ber4tbey**")
+      bot.send_message(message.chat.id, f"**Premium deilsin ❤️ By @Ber4tbey**")
       return
    if not os.path.exists(f"Users/{message.from_user.id}/phone.csv"):
       os.mkdir(f'./Users/{message.from_user.id}')
