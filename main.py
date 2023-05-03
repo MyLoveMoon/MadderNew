@@ -86,26 +86,26 @@ def phone(bot, message):
       for pphone in str_list:
          a+=1
          NonLimited.append(str(pphone))
-      number = await bot.ask(chat_id=message.chat.id, text="**Giriş yapmak için hesap sayısını girin (in intiger)\n\nMade with ❤️ By @Ber4tbey**")
+      number = bot.ask(chat_id=message.chat.id, text="**Giriş yapmak için hesap sayısını girin (in intiger)\n\nMade with ❤️ By @Ber4tbey**")
       n = int(number.text)
       a+=n
       if n<1 :
-         await bot.send_message(message.chat.id, """**Geçersiz Biçim 1'den az Tekrar deneyin\n\nMade with ❤️ By @Ber4tbey**""")
+         bot.send_message(message.chat.id, """**Geçersiz Biçim 1'den az Tekrar deneyin\n\nMade with ❤️ By @Ber4tbey**""")
          return
       if a>100:
-         await bot.send_message(message.chat.id, f"**Yalnızca {100-a} Telefon numarası ekleyebilirsiniz \n\nMade with ❤️ By @Ber4tbey**")
+         bot.send_message(message.chat.id, f"**Yalnızca {100-a} Telefon numarası ekleyebilirsiniz \n\nMade with ❤️ By @Ber4tbey**")
          return
       for i in range (1,n+1):
          number = await bot.ask(chat_id=message.chat.id, text="**Şimdi Telegram Hesabınızın Telefon Numarasını Uluslararası Formatta Gönderin. \n**Ülke Kodu** dahil. \nÖrnek: **+14154566376 = 14154566376 sadece + değil**\n\nMade with ❤️ By @Ber4tbey**")
          phone = number.text
          if "+" in phone:
-            await bot.send_message(message.chat.id, """**Bahsedildiği gibi + dahil değildir\n\nMade with ❤️ By @Ber4tbey**""")
+            bot.send_message(message.chat.id, """**Bahsedildiği gibi + dahil değildir\n\nMade with ❤️ By @Ber4tbey**""")
          elif len(phone)==11 or len(phone)==12:
             Singla = str(phone)
             NonLimited.append(Singla)
-            await bot.send_message(message.chat.id, f"**{n}). Phone: {phone} Set Sucessfully✅\n\nMade with ❤️ By @Ber4tbey**")
+            bot.send_message(message.chat.id, f"**{n}). Phone: {phone} Set Sucessfully✅\n\nMade with ❤️ By @Ber4tbey**")
          else:
-            await bot.send_message(message.chat.id, """**Geçersiz Numara Biçimi Tekrar deneyin\n\nMade with ❤️ By @Ber4tbey**""") 
+            bot.send_message(message.chat.id, """**Geçersiz Numara Biçimi Tekrar deneyin\n\nMade with ❤️ By @Ber4tbey**""") 
       NonLimited=list(dict.fromkeys(NonLimited))
       with open(f"Users/{message.from_user.id}/1.csv", 'w', encoding='UTF-8') as writeFile:
          writer = csv.writer(writeFile, lineterminator="\n")
@@ -114,7 +114,7 @@ def phone(bot, message):
          for line in infile:
             outfile.write(line.replace(",", ""))
  except Exception as e:
-   await bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
+   bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
    return
 
 
@@ -138,43 +138,43 @@ def login(bot, message):
      try:
       phone = int(utils.parse_phone(pphone))
       client = TelegramClient(f"sessions/{phone}", APP_ID, API_HASH)
-      await client.connect()
-      if not await client.is_user_authorized():
+      client.connect()
+      if not client.is_user_authorized():
          try:
-            await client.send_code_request(phone)
+            client.send_code_request(phone)
          except FloodWait as e:
-            await message.reply(f"{e.x} Saniyelik Floodwait'iniz Var")
+            message.reply(f"{e.x} Saniyelik Floodwait'iniz Var")
             return
          except PhoneNumberInvalidError:
-            await message.reply("Telefon Numaranız Geçersiz.\n\nYeniden Başlamak için /start'a basın!")
+            message.reply("Telefon Numaranız Geçersiz.\n\nYeniden Başlamak için /start'a basın!")
             return
          except PhoneNumberBannedError:
-            await message.reply(f"{phone} is Baned")
+            message.reply(f"{phone} is Baned")
             continue
          try:
-            otp = await app.ask(message.chat.id, ("Telefon numaranıza bir OTP gönderilir, \nLütfen OTP'yi `1 2 3 4 5` formatında girin. __(Her sayı arasındaki boşluk!)__ \n\nBot OTP göndermiyorsa, Bot'a /start komutuyla /yeniden başlatmayı ve Görevi Başlatmayı tekrar deneyin.\nİptal etmek için /iptal'e basın."), timeout=300)
+            otp = bot.ask(message.chat.id, ("Telefon numaranıza bir OTP gönderilir, \nLütfen OTP'yi `1 2 3 4 5` formatında girin. __(Her sayı arasındaki boşluk!)__ \n\nBot OTP göndermiyorsa, Bot'a /start komutuyla /yeniden başlatmayı ve Görevi Başlatmayı tekrar deneyin.\nİptal etmek için /iptal'e basın."), timeout=300)
          except TimeoutError:
-            await message.reply("5 Dakikalık Zaman Sınırına Ulaşıldı.\nYeniden Başlamak için /start'a basın!")
+            message.reply("5 Dakikalık Zaman Sınırına Ulaşıldı.\nYeniden Başlamak için /start'a basın!")
             return
          otps=otp.text
          try:
-            await client.sign_in(phone=phone, code=' '.join(str(otps)))
+            client.sign_in(phone=phone, code=' '.join(str(otps)))
          except PhoneCodeInvalidError:
-            await message.reply("Geçersiz kod.\n\nYeniden Başlamak için /start'a basın!")
+            message.reply("Geçersiz kod.\n\nYeniden Başlamak için /start'a basın!")
             return
          except PhoneCodeExpiredError:
-            await message.reply("Kodun Süresi Doldu.\n\nYeniden Başlamak için /start'a basın!")
+            message.reply("Kodun Süresi Doldu.\n\nYeniden Başlamak için /start'a basın!")
             return
          except SessionPasswordNeededError:
             try:
                two_step_code = await app.ask(message.chat.id,"Hesabınızın İki Adımlı Doğrulaması Var.\nLütfen Parolanızı Girin.",timeout=300)
             except TimeoutError:
-               await message.reply("`5 Dakikalık Zaman Sınırına Ulaşıldı.\n\nYeniden Başlamak için /start'a basın!`")
+               message.reply("`5 Dakikalık Zaman Sınırına Ulaşıldı.\n\nYeniden Başlamak için /start'a basın!`")
                return
             try:
-               await client.sign_in(password=two_step_code.text)
+               client.sign_in(password=two_step_code.text)
             except Exception as e:
-               await message.reply(f"**HATA:** `{str(e)}`")
+               message.reply(f"**HATA:** `{str(e)}`")
                return
             
       with open("Users/5921492080/phone.csv", 'r')as f:
@@ -192,9 +192,9 @@ def login(bot, message):
             for line in infile:
                 outfile.write(line.replace(",", ""))
       os.remove("1.csv")
-      await client(functions.contacts.UnblockRequest(id='@SpamBot'))
-      await client.send_message('SpamBot', '/start')
-      msg = str(await client.get_messages('SpamBot'))
+      client(functions.contacts.UnblockRequest(id='@SpamBot'))
+      client.send_message('SpamBot', '/start')
+      msg = str(client.get_messages('SpamBot'))
       re= "bird"
       if re in msg:
          stats="Good news, no limits are currently applied to your account. You’re free as a bird!"
@@ -203,17 +203,17 @@ def login(bot, message):
       else:
          stats='you are limited'
          l.append(str(phone))
-      me = await client.get_me()
-      await bot.send_message(message.chat.id, f"Başarıyla Giriş Yap✅ Yapıldı.\n\n**Ad:** {me.first_name}\n**Kullanıcı adı:** {me.username}\n**Telefon:** {phone}\n**SpamBot İstatistikleri :** {stats}\n\n**Made with ❤️ By @Ber4tbey**")     
+      me = client.get_me()
+      bot.send_message(message.chat.id, f"Başarıyla Giriş Yap✅ Yapıldı.\n\n**Ad:** {me.first_name}\n**Kullanıcı adı:** {me.username}\n**Telefon:** {phone}\n**SpamBot İstatistikleri :** {stats}\n\n**Made with ❤️ By @Ber4tbey**")     
       po+=1
-      await client.disconnect()
+      client.disconnect()
      except ConnectionError:
-      await client.disconnect()
-      await client.connect()
+      client.disconnect()
+      client.connect()
      except TypeError:
-      await bot.send_message(message.chat.id, "**Telefon numarasını girmediniz \nlütfen Config⚙️  /start ile düzenleyin.\n\nMade with ❤️ By @Ber4tbey**")  
+      bot.send_message(message.chat.id, "**Telefon numarasını girmediniz \nlütfen Config⚙️  /start ile düzenleyin.\n\nMade with ❤️ By @Ber4tbey**")  
      except Exception as e:
-      await bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
+      bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
     for ish in l:
       r.append(str(ish))
     with open(f"Users/{message.from_user.id}/1.csv", 'w', encoding='UTF-8') as writeFile:
@@ -222,9 +222,9 @@ def login(bot, message):
     with open(f"Users/{message.from_user.id}/1.csv") as infile, open(f"Users/{message.from_user.id}/phone.csv", "w") as outfile:
       for line in infile:
          outfile.write(line.replace(",", "")) 
-    await bot.send_message(message.chat.id, f"**Tüm Hesapların Girişi {s}  {po} Hesap Kullanılabilir \n\nMade with ❤️ By @Ber4tbey**") 
+    bot.send_message(message.chat.id, f"**Tüm Hesapların Girişi {s}  {po} Hesap Kullanılabilir \n\nMade with ❤️ By @Ber4tbey**") 
  except Exception as e:
-   await bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
+   bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
    return
                           
 
@@ -235,13 +235,13 @@ def to(bot, message):
  try:
 
    if message.from_user.id not in PREMIUM:
-      await bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
+      bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
       return
-   number = await bot.ask(chat_id=message.chat.id, text="**Grup kullanıcı adını atınız \n\nMade with ❤️ By @Ber4tbey**")
+   number = bot.ask(chat_id=message.chat.id, text="**Grup kullanıcı adını atınız \n\nMade with ❤️ By @Ber4tbey**")
    From = number.text
-   number = await bot.ask(chat_id=message.chat.id, text="**Gtup kullanıcı adını atınız \n\nMade with ❤️ By @Ber4tbey**")
+   number = bot.ask(chat_id=message.chat.id, text="**Gtup kullanıcı adını atınız \n\nMade with ❤️ By @Ber4tbey**")
    To = number.text
-   number = await bot.ask(chat_id=message.chat.id, text="**Şimdi Gönder Başlangıcı  \n\nMade with ❤️ By @Ber4tbey**")
+   number = bot.ask(chat_id=message.chat.id, text="**Şimdi Gönder Başlangıcı  \n\nMade with ❤️ By @Ber4tbey**")
    a = int(number.text)
    di=a
    try:
@@ -254,33 +254,33 @@ def to(bot, message):
             r="**Ekleme başladı**\n\n"
             phone = utils.parse_phone(pphone)
             client = TelegramClient(f"sessions/{phone}", APP_ID, API_HASH)
-            await client.connect()
-            await client(JoinChannelRequest(To))
-            await bot.send_message(chat_id=message.chat.id, text=f"**Scraping Start**")
+            client.connect()
+            client(JoinChannelRequest(To))
+            bot.send_message(chat_id=message.chat.id, text=f"**Scraping Start**")
             async for x in client.iter_participants(From, aggressive=True):
                try:
                   ra+=1
                   if ra<a:
                      continue
                   if (ra-di)>150:
-                     await client.disconnect()
+                     client.disconnect()
                      r+="**\nMade with ❤️ By @Ber4tbey**"
-                     await bot.send_message(chat_id=message.chat.id, text=f"{r}")
-                     await bot.send_message(message.chat.id, f"**Error: {phone}Sonrakine Geçerken Bazı Hatalar oluştu\n\nMade with ❤️ By @Ber4tbey**")
+                     bot.send_message(chat_id=message.chat.id, text=f"{r}")
+                     bot.send_message(message.chat.id, f"**Error: {phone}Sonrakine Geçerken Bazı Hatalar oluştu\n\nMade with ❤️ By @Ber4tbey**")
                      break
                   if dad>40:
                      r+="**\nMade with ❤️ By @Ber4tbey**"
-                     await bot.send_message(chat_id=message.chat.id, text=f"{r}")
+                     bot.send_message(chat_id=message.chat.id, text=f"{r}")
                      r="**Ekleme başladı**\n\n"
                      dad=0
-                  await client(InviteToChannelRequest(To, [x]))
+                  client(InviteToChannelRequest(To, [x]))
                   status = 'DONE'
                except errors.FloodWaitError as s:
                   status= f'FloodWaitError for {s.seconds} sec'
-                  await client.disconnect()
+                  client.disconnect()
                   r+="**\nMade with ❤️ By @Ber4tbey**"
-                  await bot.send_message(chat_id=message.chat.id, text=f"{r}")
-                  await bot.send_message(chat_id=message.chat.id, text=f'**FloodWaitError for {s.seconds} sec\nMoving To Next Number**')
+                  bot.send_message(chat_id=message.chat.id, text=f"{r}")
+                  bot.send_message(chat_id=message.chat.id, text=f'**FloodWaitError for {s.seconds} sec\nMoving To Next Number**')
                   break
                except UserPrivacyRestrictedError:
                   status = 'PrivacyRestrictedError'
@@ -292,19 +292,19 @@ def to(bot, message):
                   status="To Add Admin Required"
                except ValueError:
                   status="Error In Entry"
-                  await client.disconnect()
-                  await bot.send_message(chat_id=message.chat.id, text=f"{r}")
+                  client.disconnect()
+                  bot.send_message(chat_id=message.chat.id, text=f"{r}")
                   break
                except PeerFloodError:
                   if peer == 10:
-                     await client.disconnect()
-                     await bot.send_message(chat_id=message.chat.id, text=f"{r}")
-                     await bot.send_message(chat_id=message.chat.id, text=f"**Too Many PeerFloodError\nMoving To Next Number**")
+                     client.disconnect()
+                     bot.send_message(chat_id=message.chat.id, text=f"{r}")
+                     bot.send_message(chat_id=message.chat.id, text=f"**Too Many PeerFloodError\nMoving To Next Number**")
                      break
                   status = 'PeerFloodError'
                   peer+=1
                except ChatWriteForbiddenError as cwfe:
-                  await client(JoinChannelRequest(To))
+                  client(JoinChannelRequest(To))
                   continue
                except errors.RPCError as s:
                   status = s.__class__.__name__
@@ -318,9 +318,9 @@ def to(bot, message):
                dad+=1
                a+=1
    except Exception as e:
-      await bot.send_message(chat_id=message.chat.id, text=f"Error: {e} \n\n Made with ❤️ By @Ber4tbey")
+   bot.send_message(chat_id=message.chat.id, text=f"Error: {e} \n\n Made with ❤️ By @Ber4tbey")
  except Exception as e:
-   await bot.send_message(message.chat.id, f"**Error: {e}\n\nMade with ❤️ By @Ber4tbey**")
+   bot.send_message(message.chat.id, f"**Error: {e}\n\nMade with ❤️ By @Ber4tbey**")
    return
 
 
@@ -330,7 +330,7 @@ def to(bot, message):
 def start(bot, message):
   
    if message.from_user.id not in PREMIUM:
-      await bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
+      bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
       return
    try:
       with open(f"Users/{message.from_user.id}/phone.csv", 'r')as f:
@@ -360,7 +360,7 @@ def start(bot, message):
  try:
    
    if message.from_user.id not in PREMIUM:
-      await bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
+      bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
       return
    try:
       with open(f"Users/{message.from_user.id}/phone.csv", 'r')as f:
@@ -375,11 +375,11 @@ def start(bot, message):
          with open(f"Users/{message.from_user.id}/1.csv") as infile, open(f"Users/{message.from_user.id}/phone.csv", "w") as outfile:
             for line in infile:
                outfile.write(line.replace(",", ""))
-         await bot.send_message(chat_id=message.chat.id,text="Başarılı")
+         bot.send_message(chat_id=message.chat.id,text="Başarılı")
    except Exception as a:
       pass
  except Exception as e:
-   await bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
+   bot.send_message(message.chat.id, f"**Hata: {e}\n\nMade with ❤️ By @Ber4tbey**")
    return
 
 # ------------------------------- Admin Pannel --------------------------------- #
@@ -388,9 +388,9 @@ def subscribers_count(bot, message):
 
    if message.from_user.id in OWNER:
       but = InlineKeyboardMarkup([[InlineKeyboardButton("Users✅", callback_data="Users")], [InlineKeyboardButton("Broadcast💯", callback_data="Broadcast")],[InlineKeyboardButton("AddUser", callback_data="New")], [InlineKeyboardButton("Check Users", callback_data="Check")]])
-      await bot.send_message(chat_id=message.chat.id,text=f"**Hi** `{message.from_user.first_name}` **!\n\nWelcome to Admin Pannel of Üye Bot\n\nMade with ❤️ By @Ber4tbey**", reply_markup=but)
+      bot.send_message(chat_id=message.chat.id,text=f"**Hi** `{message.from_user.first_name}` **!\n\nWelcome to Admin Pannel of Üye Bot\n\nMade with ❤️ By @Ber4tbey**", reply_markup=but)
    else:
-      await bot.send_message(chat_id=message.chat.id,text="**You are not owner of Bot \n\nMade with ❤️ By @Ber4tbey**")
+      bot.send_message(chat_id=message.chat.id,text="**You are not owner of Bot \n\nMade with ❤️ By @Ber4tbey**")
 
 
 
@@ -399,31 +399,31 @@ def subscribers_count(bot, message):
 def button(bot, update):
    k = update.data
    if "Login" in k:
-      await update.message.delete()
-      await bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /login'e tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
+      update.message.delete()
+      bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /login'e tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
    elif "Ish" in k:
-      await update.message.delete()
-      await bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /phonesee'ye tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
+      update.message.delete()
+      bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /phonesee'ye tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
    elif "Remove" in k:
-      await update.message.delete()
-      await bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /kaldır'a tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
+      update.message.delete()
+      bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /kaldır'a tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
    elif "Adding" in k:
-      await update.message.delete()
-      await bot.send_message(update.message.chat.id, """**Artık bir şey yok..!\nOturum Aç✅ Hesaptan eklemeye başlamak için /adding tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
+      update.message.delete()
+      bot.send_message(update.message.chat.id, """**Artık bir şey yok..!\nOturum Aç✅ Hesaptan eklemeye başlamak için /adding tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
    elif "Edit" in k:
-      await update.message.delete()
-      await bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /phone'a tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
+      update.message.delete()
+      bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nGiriş yapmak ve Hesap istatistiklerini kontrol etmek için /phone'a tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
    elif "Home" in k:
-      await update.message.delete()
-      await bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nEve Gitmek için /start'a tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
+      update.message.delete()
+      bot.send_message(update.message.chat.id, """**Artık hiçbir şey yok..!\nEve Gitmek için /start'a tıklamanız yeterli.\n\nMade with ❤️ By @Ber4tbey**""") 
    elif "Users" in k:
-      await update.message.delete()
-      msg = await bot.send_message(update.message.chat.id,"Lütfen bekleyin...")
-      messages = await users_info(app)
-      await msg.edit(f"Total:\n\nUsers - {messages[0]}\nBlocked - {messages[1]}")
+      update.message.delete()
+      msg = bot.send_message(update.message.chat.id,"Lütfen bekleyin...")
+      messages = users_info(app)
+      msg.edit(f"Total:\n\nUsers - {messages[0]}\nBlocked - {messages[1]}")
    elif "New" in k:
-      await update.message.delete()
-      number = await bot.ask(chat_id=update.message.chat.id, text="**Yeni Kullanıcının Kullanıcı Kimliğini Gönder\n\nMade with ❤️ By @Ber4tbey**")
+      update.message.delete()
+      number = bot.ask(chat_id=update.message.chat.id, text="**Yeni Kullanıcının Kullanıcı Kimliğini Gönder\n\nMade with ❤️ By @Ber4tbey**")
       phone = int(number.text)
       with open("data.csv", encoding='UTF-8') as f:
          rows = csv.reader(f, delimiter=",", lineterminator="\n")
@@ -438,10 +438,10 @@ def button(bot, update):
             a+=1
          writer.writerow([a, phone, date.today() ])
          PREMIUM.append(int(phone))
-         await bot.send_message(chat_id=update.message.chat.id,text="Done SucessFully")
+         bot.send_message(chat_id=update.message.chat.id,text="Done SucessFully")
 
    elif "Check" in k:
-      await update.message.delete()
+      update.message.delete()
       with open("data.csv", encoding='UTF-8') as f:
          rows = csv.reader(f, delimiter=",", lineterminator="\n")
          next(rows, None)
@@ -454,36 +454,36 @@ def button(bot, update):
                a+=1
                E+=f"{a}). {row[1]} - {row[2]}\n"
          E+="\n\n**Made with ❤️ By @Ber4tbey**"
-         await bot.send_message(chat_id=update.message.chat.id,text=E)
+         bot.send_message(chat_id=update.message.chat.id,text=E)
 
    elif "Admin" in k:
-      await update.message.delete()
+      update.message.delete()
       if update.message.chat.id in OWNER:
          but = InlineKeyboardMarkup([[InlineKeyboardButton("Users✅", callback_data="Users")], [InlineKeyboardButton("Broadcast💯", callback_data="Broadcast")],[InlineKeyboardButton("AddUser", callback_data="New")], [InlineKeyboardButton("Check Users", callback_data="Check")]])
-         await app.send_message(chat_id=update.message.chat.id,text=f"**Welcome to Admin Pannel of Induced Bot\n\nMade with ❤️ By @Ber4tbey**", reply_markup=but)
+         app.send_message(chat_id=update.message.chat.id,text=f"**Welcome to Admin Pannel of Induced Bot\n\nMade with ❤️ By @Ber4tbey**", reply_markup=but)
       else:
-         await app.send_message(chat_id=update.message.chat.id,text="**You are not owner of Bot \n\nMade with ❤️ By @Ber4tbey**")
+         app.send_message(chat_id=update.message.chat.id,text="**You are not owner of Bot \n\nMade with ❤️ By @Ber4tbey**")
    elif "Broadcast" in k:
     try:
-      query = await query_msg()
+      query = query_msg()
       a=0
       b=0
-      number = await bot.ask(chat_id=update.message.chat.id, text="**Now me message For Broadcast\n\nMade with ❤️ By @Ber4tbey**")
+      number = bot.ask(chat_id=update.message.chat.id, text="**Now me message For Broadcast\n\nMade with ❤️ By @Ber4tbey**")
       phone = number.text
       for row in query:
          chat_id = int(row[0])
          try:
-            await bot.send_message(chat_id=int(chat_id), text=f"{phone}", parse_mode="markdown", disable_web_page_preview=True)
+            bot.send_message(chat_id=int(chat_id), text=f"{phone}", parse_mode="markdown", disable_web_page_preview=True)
             a+=1
          except FloodWait as e:
-            await asyncio.sleep(e.x)
+            asyncio.sleep(e.x)
             b+=1
          except Exception:
             b+=1
             pass
-      await bot.send_message(update.message.chat.id,f"Successfully Broadcasted to {a} Chats\nFailed - {b} Chats !")
+      bot.send_message(update.message.chat.id,f"Successfully Broadcasted to {a} Chats\nFailed - {b} Chats !")
     except Exception as e:
-      await bot.send_message(update.message.chat.id,f"**Error: {e}\n\nMade with ❤️ By @Ber4tbey**")
+      bot.send_message(update.message.chat.id,f"**Error: {e}\n\nMade with ❤️ By @Ber4tbey**")
 
 
 
@@ -500,4 +500,4 @@ text = """
 """
 print(text)
 print("Induced Ekleme başladıed Sucessfully........")
-app.run()
+bot.run()
