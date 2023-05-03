@@ -71,7 +71,7 @@ def start(bot, message):
 @bot.on_message(filters.command("phone"))
 def phone(bot, message):
  try:
-   await message.delete()
+   message.delete()
 
    if message.from_user.id not in PREMIUM:
       await bot.send_message(message.chat.id, f"**Premium deilsin ❤️ By @Ber4tbey**")
