@@ -32,7 +32,7 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 UPDATES_CHANNEL = "rjbr0"
 OWNER= [5921492080,6285755686]
 PREMIUM=[5921492080,6285755686]
-app = pyrogram.Client("app", api_id=APP_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+bot = pyrogram.Client("bot", api_id=APP_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 with open("data.csv", encoding='UTF-8') as f:
     rows = csv.reader(f, delimiter=",", lineterminator="\n")
@@ -45,7 +45,7 @@ with open("data.csv", encoding='UTF-8') as f:
             PREMIUM.append(int(row[1]))
 
 # ------------------------------- Subscribe --------------------------------- #
-async def Subscribe(lel, message):
+async def Subscribe(bot, message):
    update_channel = UPDATES_CHANNEL
    if update_channel:
       try:
@@ -62,7 +62,7 @@ async def Subscribe(lel, message):
 
 # ------------------------------- Start --------------------------------- #
 @bot.on_message(filters.command("start"))
-async def start(bot, message):
+def start(bot, message):
    if not os.path.exists(f"Users/{message.from_user.id}/phone.csv"):
       os.mkdir(f'./Users/{message.from_user.id}')
       open(f"Users/{message.from_user.id}/phone.csv","w")
@@ -76,7 +76,7 @@ async def start(bot, message):
 
 # ------------------------------- Set Phone No --------------------------------- #
 @bot.on_message(filters.command("phone"))
-async def phone(bot, message):
+def phone(bot, message):
  try:
    await message.delete()
 
@@ -128,7 +128,7 @@ async def phone(bot, message):
 
 # ------------------------------- Acc Login --------------------------------- #
 @bot.on_message(filters.command(["login"]))
-async def login(bot, message):
+def login(bot, message):
  try:
    await message.delete()
  
@@ -238,7 +238,7 @@ async def login(bot, message):
 
 # ------------------------------- Acc Private Adding --------------------------------- #
 @bot.on_message(filters.command("adding"))
-async def to(bot, message):
+def to(bot, message):
  try:
 
    if message.from_user.id not in PREMIUM:
@@ -334,7 +334,7 @@ async def to(bot, message):
 
 # ------------------------------- Start --------------------------------- #
 @bot.on_message(filters.command("phonesee"))
-async def start(bot, message):
+def start(bot, message):
   
    if message.from_user.id not in PREMIUM:
       await bot.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
@@ -363,7 +363,7 @@ async def start(bot, message):
 
 # ------------------------------- Start --------------------------------- #
 @bot.on_message(filters.command("remove"))
-async def start(bot, message):
+def start(bot, message):
  try:
    
    if message.from_user.id not in PREMIUM:
@@ -391,7 +391,7 @@ async def start(bot, message):
 
 # ------------------------------- Admin Pannel --------------------------------- #
 @bot.on_message(filters.command('ishan'))
-async def subscribers_count(bot, message):
+def subscribers_count(bot, message):
 
    if message.from_user.id in OWNER:
       but = InlineKeyboardMarkup([[InlineKeyboardButton("Users✅", callback_data="Users")], [InlineKeyboardButton("Broadcast💯", callback_data="Broadcast")],[InlineKeyboardButton("AddUser", callback_data="New")], [InlineKeyboardButton("Check Users", callback_data="Check")]])
@@ -403,7 +403,7 @@ async def subscribers_count(bot, message):
 
 # ------------------------------- Buttons --------------------------------- #
 @bot.on_callback_query()
-async def button(bot, update):
+def button(bot, update):
    k = update.data
    if "Login" in k:
       await update.message.delete()
