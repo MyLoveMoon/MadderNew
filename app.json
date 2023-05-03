@@ -3,6 +3,14 @@
   "name": "Member Adder",
   "description": "A member adder bot for telegram.",
   "env": {
+    "API_ID": {
+      "description": "Get this value from https://my.telegram.org",
+      "required": true
+    },
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org",
+      "required": true
+    },
     "BOT_TOKEN": {
       "description": "Enter bot token Get It From @botfather! Please do not steal.",
       "value": ""
