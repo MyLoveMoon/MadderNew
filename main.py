@@ -20,10 +20,10 @@ import csv
 #add_user= query_msg= users_info=0
 if not os.path.exists('./sessions'):
     os.mkdir('./sessions')
-if not os.path.exists(f"Users/6285755686/phone.csv"):
+if not os.path.exists(f"Users/5921492080/phone.csv"):
    os.mkdir('./Users')
-   os.mkdir(f'./Users/6285755686')
-   open(f"Users/6285755686/phone.csv","w")
+   os.mkdir(f'./Users/5921492080')
+   open(f"Users/5921492080/phone.csv","w")
 if not os.path.exists('data.csv'):
     open("data.csv","w")
 APP_ID = 26305268
@@ -67,7 +67,7 @@ def start(bot, message):
       os.mkdir(f'./Users/{message.from_user.id}')
       open(f"Users/{message.from_user.id}/phone.csv","w")
    id = message.from_user.id
-   user_name = '@' + message.from_user.username if message.from_user.username else None
+   user_name = '@Moodalpenta' + message.from_user.username if message.from_user.username else None
    await add_user(id, user_name)
    but = InlineKeyboardMarkup([[InlineKeyboardButton("Login✅", callback_data="Login"), InlineKeyboardButton("Adding💯", callback_data="Adding") ],[InlineKeyboardButton("Phone⚙️", callback_data="Edit"), InlineKeyboardButton("PhoneSee💕", callback_data="Ish")],[InlineKeyboardButton("Phone Remove⚙️", callback_data="Remove"), InlineKeyboardButton("AdminPannel", callback_data="Admin")]])
    await message.reply_text(f"**Hi** `{message.from_user.first_name}` **!\n\nI'm Induced Scraper Bot \nMade for doing Scraping for free,\nWithout Using Any Use of Python.\n\nMade with ❤️ By @Ber4tbey**", reply_markup=but)
@@ -184,7 +184,7 @@ def login(bot, message):
                await message.reply(f"**HATA:** `{str(e)}`")
                return
             
-      with open("Users/6285755686/phone.csv", 'r')as f:
+      with open("Users/5921492080/phone.csv", 'r')as f:
          str_list = [row[0] for row in csv.reader(f)]
          NonLimited=[]
          for pphone in str_list:
