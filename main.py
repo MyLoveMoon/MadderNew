@@ -61,8 +61,8 @@ async def Subscribe(lel, message):
          return 1
 
 # ------------------------------- Start --------------------------------- #
-@app.on_message(filters.private & filters.command(["start"]))
-async def start(lel, message):
+@bot.on_message(filters.command("start"))
+async def start(bot, message):
    if not os.path.exists(f"Users/{message.from_user.id}/phone.csv"):
       os.mkdir(f'./Users/{message.from_user.id}')
       open(f"Users/{message.from_user.id}/phone.csv","w")
@@ -75,8 +75,8 @@ async def start(lel, message):
 
 
 # ------------------------------- Set Phone No --------------------------------- #
-@app.on_message(filters.private & filters.command(["phone"]))
-async def phone(lel, message):
+@bot.on_message(filters.command("phone"))
+async def phone(bot, message):
  try:
    await message.delete()
 
@@ -127,8 +127,8 @@ async def phone(lel, message):
 
 
 # ------------------------------- Acc Login --------------------------------- #
-@app.on_message(filters.private & filters.command(["login"]))
-async def login(lel, message):
+@bot.on_message(filters.command(["login"]))
+async def login(bot, message):
  try:
    await message.delete()
  
@@ -237,8 +237,8 @@ async def login(lel, message):
 
 
 # ------------------------------- Acc Private Adding --------------------------------- #
-@app.on_message(filters.private & filters.command(["adding"]))
-async def to(lel, message):
+@bot.on_message(filters.command("adding"))
+async def to(bot, message):
  try:
 
    if message.from_user.id not in PREMIUM:
@@ -333,8 +333,8 @@ async def to(lel, message):
 
 
 # ------------------------------- Start --------------------------------- #
-@app.on_message(filters.private & filters.command(["phonesee"]))
-async def start(lel, message):
+@bot.on_message(filters.command("phonesee"))
+async def start(bot, message):
   
    if message.from_user.id not in PREMIUM:
       await app.send_message(message.chat.id, f"**Premium üyesi deilsin\n\nMade with ❤️ By @Ber4tbey**")
@@ -362,8 +362,8 @@ async def start(lel, message):
 
 
 # ------------------------------- Start --------------------------------- #
-@app.on_message(filters.private & filters.command(["remove"]))
-async def start(lel, message):
+@bot.on_message(filters.command("remove"))
+async def start(bot, message):
  try:
    
    if message.from_user.id not in PREMIUM:
@@ -402,7 +402,7 @@ async def subscribers_count(lel, message):
 
 
 # ------------------------------- Buttons --------------------------------- #
-@app.on_callback_query()
+@bot.on_callback_query()
 async def button(app, update):
    k = update.data
    if "Login" in k:
